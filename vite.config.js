@@ -1,10 +1,16 @@
-import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { defineConfig } from "vite";
+import { fileURLToPath, URL } from "node:url";
 import vue from "@vitejs/plugin-vue";
+import Icons from "unplugin-icons/vite";
+import Components from "unplugin-vue-components/vite";
+import AutoImport from "unplugin-auto-import/vite";
+import IconsResolver from "unplugin-icons/resolver";
+import { PrimeVueResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/vite-pack/',
+  base: "/physic/",
   plugins: [
     vue(),
     ViteImageOptimizer({
@@ -12,7 +18,7 @@ export default defineConfig({
         multipass: true,
         plugins: [
           {
-            name: 'preset-default',
+            name: "preset-default",
             params: {
               overrides: {
                 cleanupNumericValues: false,
@@ -25,11 +31,11 @@ export default defineConfig({
               convertPathData: false,
             },
           },
-          'sortAttrs',
+          "sortAttrs",
           {
-            name: 'addAttributesToSVGElement',
+            name: "addAttributesToSVGElement",
             params: {
-              attributes: [{ xmlns: 'http://www.w3.org/2000/svg' }],
+              attributes: [{ xmlns: "http://www.w3.org/2000/svg" }],
             },
           },
         ],
@@ -47,6 +53,24 @@ export default defineConfig({
         lossless: true,
       },
     }),
+    Components({ resolvers: [IconsResolver(), PrimeVueResolver()] }),
+    Icons({
+      /* options */
+    }),
+    AutoImport({
+      /* options */
+    }),
   ],
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/style/var.scss"; @import "@/style/mixins.scss";`,
+      },
+    },
+  },
 });
-

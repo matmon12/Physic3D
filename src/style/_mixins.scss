@@ -1,0 +1,6 @@
+@mixin Panel {
+    padding: 10px 15px;
+    background-color: var(--panel-back);
+    border-radius: var(--panel-border-radius);
+    backdrop-filter: blur(10px);
+}
