@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from "vue-router";
 import Home from "@/pages/Home.vue";
 
 const routes = [
-  { path: '/physic/', name: "Home", component: Home }
+  { path: '/physic-3d/', name: "Home", component: Home }
 ]
 
 const router  = createRouter({
